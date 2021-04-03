@@ -1,5 +1,6 @@
 library(plyr)
 library(datasets)
+library(ggplot2)
 
 # Create data folder if it does not exist
 if (!file.exists("data")) {
@@ -34,14 +35,11 @@ NEI <- transform(NEI, fips = factor(fips), SCC = factor(SCC),
 Maryland <- subset(NEI, fips == 24510)
 
 png(file="plot3.png")
-par(mfrow = c(2,2))
-for (type_ in unique(NEI$type)){
-  temp <- subset(Maryland, type == type_)
-  emission_year <- tapply(temp$Emissions, temp$year, sum)
-  print(head(emission_year))
-  barplot(emission_year, main = paste("Maryland. Total PM2.5 emission from", 
-                                      type_, "for year"),
-          xlab="Year", ylab="Total PM2.5 (tons)")
-}
 
+g <- ggplot(Maryland, aes(x = year, y = Emissions))
+g + geom_col(colour="deepskyblue1", fill="deepskyblue1") + 
+  facet_grid(~ type) + 
+  ggtitle("Maryland. Total PM2.5 emission from source type and year") + 
+  theme_minimal() +
+  theme(plot.title = element_text(hjust = 0.5))
 dev.off()
