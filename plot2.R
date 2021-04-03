@@ -37,6 +37,6 @@ emission_year <- tapply(Maryland$Emissions, Maryland$year, sum)
 # options(scipen=10)
 
 png(file="plot2.png")
-barplot(emission_year/1e6, main = "Maryland. Total PM2.5 emission from all sources for year",
-        xlab="Year", ylab="Total PM2.5 (Millions tons)")
+barplot(emission_year/1e3, main = "Maryland. Total PM2.5 emission from all sources for year",
+        xlab="Year", ylab="Total PM2.5 (Thousands tons)")
 dev.off()
